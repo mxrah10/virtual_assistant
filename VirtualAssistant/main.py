@@ -62,14 +62,6 @@ def search():
   search_term = listen()
   webbrowser.open(f'https://www.google.com/search?q={search_term}')
 
-def tell_time():
-  # Get the current time
-  now = datetime.datetime.now()
-  # Format the time as a string
-  time_str = now.strftime("%I:%M %p")
-  # Speak the time
-  speak(f"The time is {time_str}.")
-
 def tell_joke():
   # Define a list of jokes
   jokes = [
@@ -99,9 +91,7 @@ def virtual_assistant(command):
   elif 'exit' in command:
     speak('Goodbye!')
     exit()
-  elif 'tell me the time' in command:
-    tell_time()
-  elif 'tell me a joke' in command:
+  elif 'joke' in command:
     tell_joke()
   else:
     speak('I am sorry, I did not understand your command. Could you please rephrase your request?')
