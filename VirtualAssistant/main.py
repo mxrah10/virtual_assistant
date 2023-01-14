@@ -2,13 +2,16 @@ import webbrowser
 import pyttsx3
 import os
 import datetime
+import pygame
 import speech_recognition as sr
-
+import time
+import pyaudio
+import random
 
 engine = pyttsx3.init()
 
 def speak(audio):
-    newVoiceRate = 115
+    newVoiceRate = 150
     engine.setProperty('rate', newVoiceRate)
     engine.say(audio)
     engine.runAndWait()
@@ -59,6 +62,27 @@ def search():
   search_term = listen()
   webbrowser.open(f'https://www.google.com/search?q={search_term}')
 
+def tell_time():
+  # Get the current time
+  now = datetime.datetime.now()
+  # Format the time as a string
+  time_str = now.strftime("%I:%M %p")
+  # Speak the time
+  speak(f"The time is {time_str}.")
+
+def tell_joke():
+  # Define a list of jokes
+  jokes = [
+    "Why couldn't the bicycle stand up by itself? Because it was two-tired.",
+    "Why did the tomato turn red? Because it saw the salad dressing!",
+    "What do you get when you cross a snowman and a vampire? Frostbite.",
+    "Why was the math book sad? Because it had too many problems.",
+    "Why couldn't the leopard play hide and seek? Because he was always spotted.",
+  ]
+  # Choose a random joke from the list
+  joke = random.choice(jokes)
+  # Speak the joke
+  speak(joke)
 def virtual_assistant(command):
   if 'hello' in command:
     greet()
@@ -75,6 +99,10 @@ def virtual_assistant(command):
   elif 'exit' in command:
     speak('Goodbye!')
     exit()
+  elif 'tell me the time' in command:
+    tell_time()
+  elif 'tell me a joke' in command:
+    tell_joke()
   else:
     speak('I am sorry, I did not understand your command. Could you please rephrase your request?')
 
