@@ -7,9 +7,10 @@ import speech_recognition as sr
 import time
 import pyaudio
 import random
+import openai
 
 engine = pyttsx3.init()
-
+openai.api_key = "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"
 def speak(audio):
     newVoiceRate = 150
     engine.setProperty('rate', newVoiceRate)
@@ -76,25 +77,18 @@ def tell_joke():
   # Speak the joke
   speak(joke)
 def virtual_assistant(command):
-  if 'hello' in command:
-    greet()
-  elif 'time' in command:
-    time()
-  elif 'date' in command:
-    date()
-  elif 'weather' in command:
-    weather()
-  elif 'music' in command:
-    music()
-  elif 'search' in command:
-    search()
-  elif 'exit' in command:
-    speak('Goodbye!')
-    exit()
-  elif 'joke' in command:
-    tell_joke()
-  else:
-    speak('I am sorry, I did not understand your command. Could you please rephrase your request?')
+  response = openai.Completion.create(
+    model="text-davinci-003",
+    prompt=command,
+    temperature=0,
+    max_tokens=100,
+    top_p=1,
+    frequency_penalty=0.0,
+    presence_penalty=0.0,
+    stop=["\n"]
+  )
+  speak(response.choices[0].text)
+  print(response)
 
 speak('Hello, I am your virtual assistant. How can I help you today?')
 
