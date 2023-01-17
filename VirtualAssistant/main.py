@@ -10,7 +10,7 @@ import random
 import openai
 
 engine = pyttsx3.init()
-openai.api_key = "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"
+openai.api_key = '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'
 def speak(audio):
     newVoiceRate = 150
     engine.setProperty('rate', newVoiceRate)
@@ -80,12 +80,12 @@ def virtual_assistant(command):
   response = openai.Completion.create(
     model="text-davinci-003",
     prompt=command,
-    temperature=0,
-    max_tokens=100,
+    temperature=0.9,
+    max_tokens=150,
     top_p=1,
     frequency_penalty=0.0,
-    presence_penalty=0.0,
-    stop=["\n"]
+    presence_penalty=0.6,
+    stop=[" Human:", " AI:"]
   )
   speak(response.choices[0].text)
   print(response)
